@@ -42,14 +42,22 @@ void handleJSData(){
   aSpeed = constrain(aSpeed + x, 0, 100);
   bSpeed = constrain(bSpeed - x, 0, 100);
   
-  //Run motors with direction based on y being negative or positive
+  //Run motors with direction based on y and speed being negative or positive
   if ( y < 0 ){
     M1.setmotor(_CW, aSpeed);
     M2.setmotor(_CW, bSpeed);
   }
   else { 
+    if (aSpeed < 0) {
+      M1.setmotor(_CW, -1 * aSpeed);
+    } else {
     M1.setmotor(_CCW, aSpeed);
+    }
+    if (bSpeed < 0) {
+      M2.setmotor(_CW, -1 * bSpeed);
+    } else {
     M2.setmotor(_CCW, bSpeed);
+    }
   }  
   //return an HTTP 200
   server.send(200, "text/plain", "");   
